@@ -1,15 +1,25 @@
-```json
-{
-  "name": "voting-system",
-  "version": "1.0.0",
-  "dependencies": {
-    "ethers": "^5.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "react-scripts": "4.0.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract VotingSystem {
+    string[] public proposals;
+    mapping(uint => uint) public votes;
+
+    constructor(string[] memory _proposals) {
+        proposals = _proposals;
+    }
+
+    function vote(uint proposalIndex) public {
+        require(proposalIndex < proposals.length, "Invalid proposal index");
+        votes[proposalIndex]++;
+    }
+
+    function getProposals() public view returns (string[] memory) {
+        return proposals;
+    }
+
+    function getVotes(uint proposalIndex) public view returns (uint) {
+        require(proposalIndex < proposals.length, "Invalid proposal index");
+        return votes[proposalIndex];
+    }
 }
